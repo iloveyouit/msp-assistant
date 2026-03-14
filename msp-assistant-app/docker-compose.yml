@@ -7,7 +7,7 @@ services:
       dockerfile: Dockerfile
     container_name: msp-assistant-frontend
     ports:
-      - "3009:80"
+      - "3011:80"
     restart: unless-stopped
     environment:
       - NODE_ENV=production

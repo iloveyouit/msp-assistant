@@ -26,14 +26,14 @@ fi
 echo "✅ Docker and Docker Compose are installed"
 echo ""
 
-# Check if port 3000 is available
-if lsof -Pi :3000 -sTCP:LISTEN -t >/dev/null 2>&1 ; then
-    echo "⚠️  Port 3000 is already in use."
-    echo "   Please stop the service using port 3000 or change the port in docker-compose.yml"
+# Check if port 3011 is available
+if lsof -Pi :3011 -sTCP:LISTEN -t >/dev/null 2>&1 ; then
+    echo "⚠️  Port 3011 is already in use."
+    echo "   Please stop the service using port 3011 or change the port in docker-compose.yml"
     exit 1
 fi
 
-echo "✅ Port 3000 is available"
+echo "✅ Port 3011 is available"
 echo ""
 
 # Stop any existing containers
@@ -52,7 +52,7 @@ echo ""
 echo "✅ Deployment Complete!"
 echo ""
 echo "=================================================="
-echo "🌐 Application is running at: http://localhost:3000"
+echo "🌐 Application is running at: http://localhost:3011"
 echo "=================================================="
 echo ""
 echo "Useful Commands:"
@@ -71,13 +71,12 @@ if docker-compose ps | grep -q "Up"; then
     echo "Opening browser in 3 seconds..."
     sleep 3
     
-    # Try to open browser
     if command -v xdg-open &> /dev/null; then
-        xdg-open http://localhost:3000
+        xdg-open http://localhost:3011
     elif command -v open &> /dev/null; then
-        open http://localhost:3000
+        open http://localhost:3011
     else
-        echo "Please open http://localhost:3000 in your browser"
+        echo "Please open http://localhost:3011 in your browser"
     fi
 else
     echo "⚠️  Container may not be running. Check logs with: docker-compose logs"
