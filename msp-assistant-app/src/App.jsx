@@ -8,7 +8,7 @@ import {
   HistorySidebar
 } from './components';
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3010';
+const API_URL = import.meta.env.VITE_API_URL || (import.meta.env.DEV ? 'http://localhost:3010' : '');
 
 const INITIAL_MESSAGE = {
   role: 'assistant',

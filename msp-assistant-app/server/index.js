@@ -53,15 +53,19 @@ app.post('/api/chat', async (req, res) => {
   }
 });
 
-app.listen(PORT, () => {
-  console.log(`MSP Assistant Server running on port ${PORT}`);
-  console.log('');
-  console.log('Provider Status:');
-  const status = llmManager.getStatus();
-  for (const [name, info] of Object.entries(status.providers)) {
-    const icon = info.configured ? '✓' : '✗';
-    console.log(`  ${icon} ${name}: ${info.configured ? 'configured' : 'not configured'}`);
-  }
-  console.log('');
-  console.log(`Default provider: ${status.defaultProvider}`);
-});
+if (process.env.NODE_ENV !== 'production' || process.env.VERCEL !== '1') {
+  app.listen(PORT, () => {
+    console.log(`MSP Assistant Server running on port ${PORT}`);
+    console.log('');
+    console.log('Provider Status:');
+    const status = llmManager.getStatus();
+    for (const [name, info] of Object.entries(status.providers)) {
+      const icon = info.configured ? '✓' : '✗';
+      console.log(`  ${icon} ${name}: ${info.configured ? 'configured' : 'not configured'}`);
+    }
+    console.log('');
+    console.log(`Default provider: ${status.defaultProvider}`);
+  });
+}
+
+export default app;
