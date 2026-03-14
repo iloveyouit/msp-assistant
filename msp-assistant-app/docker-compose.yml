@@ -1,0 +1,45 @@
+version: '3.8'
+
+services:
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: msp-assistant-frontend
+    ports:
+      - "3009:80"
+    restart: unless-stopped
+    environment:
+      - NODE_ENV=production
+    networks:
+      - msp-network
+    depends_on:
+      - backend
+    labels:
+      - "com.longviewsystems.app=msp-assistant-frontend"
+      - "com.longviewsystems.version=2.0.0"
+
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile.server
+    container_name: msp-assistant-backend
+    ports:
+      - "3010:3010"
+    restart: unless-stopped
+    environment:
+      - NODE_ENV=production
+      - PORT=3010
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - GOOGLE_API_KEY=${GOOGLE_API_KEY}
+      - DEFAULT_LLM_PROVIDER=${DEFAULT_LLM_PROVIDER:-anthropic}
+    networks:
+      - msp-network
+    labels:
+      - "com.longviewsystems.app=msp-assistant-backend"
+      - "com.longviewsystems.version=2.0.0"
+
+networks:
+  msp-network:
+    driver: bridge
